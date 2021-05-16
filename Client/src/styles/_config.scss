@@ -1,4 +1,8 @@
-// @import url(GoogleFont)
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+* {
+  font-family: 'DM Sans', sans-serif;
+}
 
 $prim: #3fb0ac;
 $sec: #ffffff;
@@ -6,6 +10,30 @@ $prim-L: lighten($prim, 10%);
 $prim-D: darken($prim, 10%);
 $pad: 1rem;
 $Navheight: 5rem;
+$rad: calc(1.5 * #{$pad});
+
+@mixin flex($h, $v, $d) {
+  display: flex;
+  align-items: $v;
+  justify-content: $h;
+  flex-direction: $d;
+  text-align: center;
+}
+
+@mixin boxStyle($bg, $shad: false) {
+  background-color: $bg;
+  border-radius: $rad;
+  color: #fff;
+  @if $bg == $prim {
+    color: black;
+  }
+  @if $shad {
+    box-shadow: 0px 2px darken($bg, 10%), 0 10px 20px rgba(0, 0, 0, 0.19),
+      0 6px 6px rgba(0, 0, 0, 0.23);
+  } @else {
+    box-shadow: 0px 2px darken($bg, 10%);
+  }
+}
 
 /*********************
 BREAKPOINTS

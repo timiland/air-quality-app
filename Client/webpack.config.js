@@ -22,6 +22,22 @@ module.exports = {
           exclude: /node_modules/,
           use:['babel-loader']
         },
+        {
+          test: /\.(svg)$/,
+          use: [
+            {
+              loader: 'svg-url-loader',
+              options: {
+                esModule: false,
+                limit: 10 * 1024,
+                name: '[name].[ext]',
+                outputPath: 'images/',
+                publicPath: 'images/',
+                noquotes: true,
+              },
+            }
+          ]
+        }
     ],
   },
   plugins: [
