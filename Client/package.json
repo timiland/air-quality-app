@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --mode development --open --hot",
-    "build": "webpack -p --mode production"
+    "build": "webpack --mode production"
   },
   "author": "Tim Iland",
   "license": "ISC",
