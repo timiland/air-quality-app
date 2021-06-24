@@ -27,7 +27,7 @@ function App(props) {
 
     // Array of Filtered Dogs
 
-    // let filteredArr = DogsArr.filter(Dog => filters.some(filterEl => Dog[filterEl.filter] === filterEl.value));
+    filters.forEach(f => f.value != null ? filteredArr = filteredArr.filter(dog => dog[f.filter] == f.value):null);
 
     // console.log(DogsArr);
     
@@ -37,12 +37,11 @@ function App(props) {
 
     const filterHandler = (selectedFilter, selectedValue) => {
         console.log('filterHandler triggered');
+
         setFilters(
             filters.map((f, i) => 
             f.filter === selectedFilter ? {filter: f.filter, value: ( f.value === selectedValue ? null: selectedValue)} : f )
         )
-
-        filteredArr = DogsArr.filter(Dog => filters.some(filterEl => Dog[filterEl.filter] === filterEl.value));
     }
 
     console.log(filters , "Filters in App.js");

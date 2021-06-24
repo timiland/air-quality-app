@@ -2,7 +2,7 @@ import React from 'react'
 
 function Navbar() {
     return (
-        <div className="Navbar Flex-left">
+        <div className="Navbar">
             <h1>DogSelector</h1>
         </div>
     )

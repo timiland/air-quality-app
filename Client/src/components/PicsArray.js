@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react'
 import ModalPic from './ModalPic'
+import Footer from './Footer';
 
 function PicsArray(props) {
 
@@ -15,16 +16,20 @@ function PicsArray(props) {
     return (
         <Fragment>
             <div className="picsArrayCont">
-            <div className="SidebarBtnCont">
-                <div className="SidebarBtn" onClick={toggleSidebar}>
-                    Filter Dogs
+            <div className="SidebarBtnCont Flex-center-col">
+                <div className={`SidebarBtn`} onClick={toggleSidebar}>
+                   {Open ? 'Back to Dogs' : 'Filter Dogs'}
                 </div>
-                <div className="SidebarBtn" onClick={toggleSidebar}>
-                    Dogs based on your selection:
-                </div>
+
+            </div>
+            <div className="picsAreaCont">
+            <div className="picsArrayHeader Flex-center-col"> 
+                    {dogs.length? 'Dogs based on your selection' : 'There are no Dogs matching your criteria'}
                 </div>
                 <div className="picsArray">
                 {dogPics}
+                </div>
+                <Footer/>
             </div>
             </div>
 

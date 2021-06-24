@@ -16,17 +16,21 @@ html {
   left: 0px;
   top: 0px;
   width: 100%;
-  height: $Navheight;
-  padding: $pad;
+  height: 7rem;
+  padding: calc(0.5 * #{$pad});
   background-color: $prim;
+  border-bottom: 2px solid $prim-D;
   color: $sec;
-  //   @include breakpoint(mobileonly) {
-  //     background-color: $sec;
-  // }
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @include breakpoint(phablet) {
+    @include flex(start, center, col);
+    height: 5rem;
+  }
+  @include flex(center, start, col);
 }
 
 .Sidebar {
+  z-index: 1;
   width: 300px;
   background-color: $sec;
   transition: transform 0.5s;
@@ -45,17 +49,41 @@ html {
     }
   }
   &Btn {
-    z-index: 5;
+    position: fixed;
+    z-index: 2;
+    display: none;
+    @include boxStyle($prim-D);
+    cursor: pointer;
+    padding: calc(#{0.5 * $pad}) $pad;
+    font-size: 1rem;
+    margin-top: -1.5rem;
+    @include breakpoint(mobileonly) {
+      display: flex;
+    }
     &Cont {
-      @include breakpoint(mobileonly) {
-        display: flex;
-      }
+      z-index: 6;
       width: 100%;
-      display: none;
       justify-content: center;
-      padding: $pad;
     }
   }
+  &Close {
+    padding-bottom: 3px;
+    border-radius: 50%;
+    font-size: 3em;
+    align-items: center;
+    justify-content: center;
+    height: calc(2 * #{$pad});
+    width: calc(2 * #{$pad});
+    color: white;
+  }
+}
+
+.BtnOverlay {
+  padding: $pad;
+  z-index: 5;
+  background-color: $inactive;
+  width: 100%;
+  border-bottom: 2px solid $prim;
 }
 
 .Sidebar-Title {
@@ -63,9 +91,7 @@ html {
   width: 100%;
   text-align: center;
   font-size: 1.5rem;
-  @include breakpoint(mobileonly) {
-    margin-top: 3rem;
-  }
+  margin-top: $pad;
 }
 
 .FilterCont {
@@ -73,6 +99,12 @@ html {
   padding: $pad;
   width: calc(100% - #{2 * $pad});
   @include flex(center, center, column);
+  &:last-of-type {
+    margin-bottom: 7rem;
+    @include breakpoint(phablet) {
+      margin-bottom: 0px;
+    }
+  }
 }
 
 .FilterTitle {
@@ -96,29 +128,50 @@ html {
   }
 }
 
-.picsArray {
+.picsAreaCont {
+  // @include flex(center, center, column);
   display: flex;
+  min-height: calc(100vh - 7rem);
+  @include breakpoint(phablet) {
+    min-height: calc(100vh - 5rem);
+  }
+  flex-direction: column;
+}
+
+.picsArray {
   flex-wrap: wrap;
-  justify-content: space-around;
+  @include flex(center, space-around, row);
+  flex: 1;
   &Cont {
+    // flex: 1;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+  }
+  &Header {
+    padding-top: calc(2 * #{$pad});
+    padding-bottom: $pad;
+    font-size: 1.5em;
+    @include breakpoint(phablet) {
+      font-size: 2rem;
+    }
+    color: $inactive;
   }
 }
 
 .picTitle {
-  font-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
   padding: calc(0.5 * #{$pad});
 }
 
 .picCont {
   @include boxStyle($prim, true);
   border: 2px solid $prim;
-  // border-radius: calc(0.5 * #{$rad});
   margin: $pad;
   &Page {
     @extend .picCont;
     width: 250px;
+    height: 295px;
   }
   &Modal {
     @extend .picCont;
@@ -189,11 +242,44 @@ html {
 }
 
 .maincont {
-  padding-top: $Navheight;
+  padding-top: 7rem;
+  @include breakpoint(phablet) {
+    padding-top: 5rem;
+  }
   background-color: $sec;
   display: flex;
   height: 100%;
   width: 100%;
+}
+
+#Footer {
+  margin-top: $pad;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  #socialLinks {
+    @include flex(center, center, row);
+    border-top: 2px solid $prim-D;
+    width: 100%;
+    color: $sec;
+    background-color: $prim;
+    a {
+      @include boxStyle($sec);
+      color: $prim;
+      padding: calc(0.5 * #{$pad}) $pad;
+      margin: calc(0.5 * #{$pad});
+    }
+  }
+  #copyright {
+    @include flex(center, center, row);
+    height: 5vh;
+    width: 100%;
+    font-size: 1rem;
+    color: $sec;
+    background-color: $prim-D;
+    padding: calc(0.5 * #{$pad});
+  }
 }
 
 .Flex {

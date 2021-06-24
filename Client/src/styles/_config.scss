@@ -8,15 +8,15 @@ $prim: #3fb0ac;
 $sec: #ffffff;
 $prim-L: lighten($prim, 10%);
 $prim-D: darken($prim, 10%);
-$pad: 1rem;
-$Navheight: 5rem;
+$inactive: #c0c0c0;
+$pad: 1.5rem;
 $rad: calc(1.5 * #{$pad});
 
 @mixin flex($h, $v, $d) {
   display: flex;
-  align-items: $v;
-  justify-content: $h;
-  flex-direction: $d;
+  align-items: $v; // stretch, center, start, end
+  justify-content: $h; // start, center, space-between, space-around, space-evenly
+  flex-direction: $d; //
   text-align: center;
 }
 
@@ -28,7 +28,7 @@ $rad: calc(1.5 * #{$pad});
     color: black;
   }
   @if $shad {
-    box-shadow: 0px 2px darken($bg, 10%), 0 10px 20px rgba(0, 0, 0, 0.19),
+    box-shadow: 0px 3px darken($bg, 10%), 0 10px 20px rgba(0, 0, 0, 0.19),
       0 6px 6px rgba(0, 0, 0, 0.23);
   } @else {
     box-shadow: 0px 2px darken($bg, 10%);
