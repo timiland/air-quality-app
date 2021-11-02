@@ -2,8 +2,6 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -54,56 +52,3 @@ module.exports = {
     // })
   ],
 };
-
-
-
-// {
-//     test: /\.(jpg|png|gif|svg)$/,
-//     loader: 'image-webpack-loader',
-//     enforce: 'pre'
-//   },
-//   {
-//     // loader options seemed to do the trick here it obviously needed the css loader and style loader
-//     test: /\.css$/,
-//     use: [
-//       "style-loader",
-//       {
-//         loader: "css-loader",
-//         options: {
-//           importLoaders: 1
-//         }
-//       },
-//       "postcss-loader"
-//     ]
-//   },
-//   {
-//     test: /\.(png|jpg)$/,
-//     use: [
-//       {
-//         loader: 'url-loader',
-//         options: {
-//           esModule: false,
-//           limit: 10 * 1024,
-//           name: '[name].[ext]',
-//           outputPath: 'images/',
-//           publicPath: 'images/',
-//         },
-//       },
-//     ],
-//   },
-//   {
-//     test: /\.(svg)$/,
-//     use: [
-//       {
-//         loader: 'svg-url-loader',
-//         options: {
-//           esModule: false,
-//           limit: 10 * 1024,
-//           name: '[name].[ext]',
-//           outputPath: 'images/',
-//           publicPath: 'images/',
-//           noquotes: true,
-//         },
-//       },
-//     ],
-//   },
