@@ -4,35 +4,22 @@
   font-family: 'DM Sans', sans-serif;
 }
 
-$prim: #3fb0ac;
-$sec: #ffffff;
-$prim-L: lighten($prim, 10%);
-$prim-D: darken($prim, 10%);
-$inactive: #c0c0c0;
-$pad: 1.5rem;
-$rad: calc(1.5 * #{$pad});
+$prim: #7836af;
+$sec: #3c7ead;
+$grey: #bebebe;
+$pad: 16px;
+$rad: 16px;
 
-@mixin flex($h, $v, $d) {
+/*********************
+FLEX UTILITY
+*********************/
+
+@mixin flex($h, $v, $d, $t: center) {
   display: flex;
-  align-items: $v; // stretch, center, start, end
   justify-content: $h; // start, center, space-between, space-around, space-evenly
+  align-items: $v; // stretch, center, start, end
   flex-direction: $d; //
-  text-align: center;
-}
-
-@mixin boxStyle($bg, $shad: false) {
-  background-color: $bg;
-  border-radius: $rad;
-  color: #fff;
-  @if $bg == $prim {
-    color: black;
-  }
-  @if $shad {
-    box-shadow: 0px 3px darken($bg, 10%), 0 10px 20px rgba(0, 0, 0, 0.19),
-      0 6px 6px rgba(0, 0, 0, 0.23);
-  } @else {
-    box-shadow: 0px 2px darken($bg, 10%);
-  }
+  text-align: $t;
 }
 
 /*********************
