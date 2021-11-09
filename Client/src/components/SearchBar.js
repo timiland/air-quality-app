@@ -9,13 +9,13 @@ const SearchBarList = (props) => {
 
     // Filtered list of cities comes into the component via props and is mapped into a list
 
-    const { searchList, activeIndex, clickHandler } = props;
+    const { suggestions, activeIndex, clickHandler } = props;
 
-    return searchList.length ? (
+    return suggestions.length ? (
 
         <ul className="suggestions">
 
-          {searchList.map((suggestion, index) => {
+          {suggestions.map((suggestion, index) => {
 
             return (
               <li className={index === activeIndex ? "suggestion-active" : ""} key={suggestion} onClick={clickHandler}>
@@ -27,7 +27,7 @@ const SearchBarList = (props) => {
         </ul>
       ) : (
         <div className="no-suggestions">
-          <em>No cities match your search criteria</em>
+          <span>No cities match your search criteria</span>
         </div>
       );
     };
@@ -48,7 +48,7 @@ export default function SearchBar(props) {
 
     const onChange = e => {
 
-        const Input = e.target.value;
+        const currentInput = e.target.value;
 
         axios.get(`https://api.openaq.org/v1/cities?limit=10000&sort=asc&country_id=GB`)
         .then(res => {
@@ -57,7 +57,7 @@ export default function SearchBar(props) {
 
           const filteredCities = cities.filter(
             (city) =>
-              city.toLowerCase().indexOf(Input.toLowerCase()) > -1
+              city.toLowerCase().indexOf(currentInput.toLowerCase()) > -1
           );
      
           setFilteredSuggestions(filteredCities);
@@ -67,7 +67,7 @@ export default function SearchBar(props) {
             console.log(err);
         })
 
-        setInput(Input);
+        setInput(currentInput);
         setActiveSuggestionIndex(0);
         setShowSuggestions(true);
         setError(false);
@@ -78,28 +78,31 @@ export default function SearchBar(props) {
 
     const createCard = (city) => {
 
-        axios.get(`https://docs.openaq.org/v2/latest?limit=1000&&sort=asc&radius=1000&country_id=GB&city=${city}&order_by=lastUpdated&dumpRaw=false`)
+      console.log(city,input);
+
+      // Get locations and their readings from the API
+
+        axios.get(`https://docs.openaq.org/v2/latest?limit=1000&sort=asc&country_id=GB&city=${city}&order_by=lastUpdated`)
         .then(res => {
 
         const { results } = res.data;
 
         const cardLocationsArr = cards.map(c => c.location);
 
-        const apiLocationsArr = results.map(c => c.location);
-
         // filter the locations from the API to get only locations that do not exist in in the Application already;
 
         const filteredApiLocationsArr = results.filter((location) => !cardLocationsArr.includes(location.location));
 
-        console.log(filteredApiLocationsArr);
-
         var result = filteredApiLocationsArr[0];
 
-        // in no Results provide user feedback
+        // if no Results provide user feedback and return from function
         if(!result) {
             setError(true);
             return;
         }
+
+        // input only controlled if card creation has been successful
+        setInput(city);
 
         const id = uuid();
 
@@ -145,15 +148,25 @@ export default function SearchBar(props) {
 
       };
 
-
-
     const onKeyDown = e => {
     
         // User pressed the enter key
         if (e.keyCode === 13) {
 
+          // If user is getting a result from filtered suggestions, then set to the active index
+          
+          if(showSuggestions) {
+
             createCard(filteredSuggestions[activeSuggestionIndex]);
 
+          // Otherwise, use what is already entered in the search box
+
+          } else {
+
+            createCard(input);
+
+          };
+            
         }
 
         // User pressed the up arrow
@@ -192,9 +205,9 @@ export default function SearchBar(props) {
                 placeholder="Enter city name..."
             />
             </div>
-            {showSuggestions && input && <SearchBarList searchList={filteredSuggestions} activeIndex={activeSuggestionIndex} clickHandler={onClick}/>}
+            {showSuggestions && input && <SearchBarList suggestions={filteredSuggestions} activeIndex={activeSuggestionIndex} clickHandler={onClick}/>}
             </div>
-            <p className="errorBox">{errorMsg ? 'There are no more readings available in that city.' : ''}</p>
+            <p className="errorBox">{errorMsg ? 'There are no more readings available in that city or it does not exist' : ''}</p>
 
       </Fragment>
     )

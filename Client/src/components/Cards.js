@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import CityCard from './CityCard'
 
 export default function Cards(props) {

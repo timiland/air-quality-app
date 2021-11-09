@@ -28,6 +28,8 @@ export default function CityCard(props) {
 
     var seconds = Number(timeDiff / 1000);
 
+    // var y = Math.floor(seconds / (3600*24));
+
     var d = Math.floor(seconds / (3600*24));
 
     var h = Math.floor(seconds % (3600*24) / 3600);
@@ -38,9 +40,9 @@ export default function CityCard(props) {
 
     var diffArr = [[d,"DAY"],[h,"HOUR"],[m,"MINUTE"],[s,"SECOND"]];
 
-    // Filter out diffArr, if previous element in arr is equal to zero and current element is not equal to zero
+    // Filter out diffArr, if previous element in arr is equal to zero and current element is not equal to zero, leaves only the largest unit
 
-    diffArr = diffArr.filter((t, i) => (!i) ||  (diffArr[i-1][0] == 0 && diffArr[i][0] != 0));
+    diffArr = diffArr.filter((t, i) => (!i) || (diffArr[i-1][0] == 0 && diffArr[i][0] != 0));
 
     // Filter out all remaining zero values and turn into 1 dimensional Array
 
