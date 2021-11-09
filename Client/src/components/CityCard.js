@@ -28,9 +28,9 @@ export default function CityCard(props) {
 
     var seconds = Number(timeDiff / 1000);
 
-    // var y = Math.floor(seconds / (3600*24));
+    var y = Math.floor(seconds / (3600*24*365));
 
-    var d = Math.floor(seconds / (3600*24));
+    var d = Math.floor(seconds % (3600*24*365) / (3600*24));
 
     var h = Math.floor(seconds % (3600*24) / 3600);
 
@@ -38,7 +38,7 @@ export default function CityCard(props) {
 
     var s = Math.floor(seconds % 60);
 
-    var diffArr = [[d,"DAY"],[h,"HOUR"],[m,"MINUTE"],[s,"SECOND"]];
+    var diffArr = [[y,"YEAR"],[d,"DAY"],[h,"HOUR"],[m,"MINUTE"],[s,"SECOND"]];
 
     // Filter out diffArr, if previous element in arr is equal to zero and current element is not equal to zero, leaves only the largest unit
 
