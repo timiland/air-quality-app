@@ -78,8 +78,6 @@ export default function SearchBar(props) {
 
     const createCard = (city) => {
 
-      console.log(city,input);
-
       // Get locations and their readings from the API
 
         axios.get(`https://docs.openaq.org/v2/latest?limit=1000&sort=asc&country_id=GB&city=${city}&order_by=lastUpdated`)
