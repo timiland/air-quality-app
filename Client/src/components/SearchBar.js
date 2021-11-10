@@ -50,16 +50,30 @@ export default function SearchBar(props) {
 
         const currentInput = e.target.value;
 
-        axios.get(`https://api.openaq.org/v1/cities?limit=10000&sort=asc&country_id=GB`)
+        axios.get(`https://api.openaq.org/v1/cities?limit=1000&sort=asc&country_id=GB`)
         .then(res => {
 
-        const cities = res.data.results.map( city => city.name );
+          const citiesArr = res.data.results.map( city => city.name );
 
-          const filteredCities = cities.filter(
+          // Filter out cities with no match
+          var filteredCities = citiesArr.filter(
             (city) =>
               city.toLowerCase().indexOf(currentInput.toLowerCase()) > -1
           );
-     
+
+          // Create an array of all other cities where input is at the beginning of the string... and sort A-B
+          var first = filteredCities.filter(
+            (city) => city.toLowerCase().indexOf(currentInput.toLowerCase()) == 0
+          ).sort();
+
+          // Create an array of all other cities where input is not at the beginning of the string... and sort A-B
+          var others = filteredCities.filter(
+            (city) => city.toLowerCase().indexOf(currentInput.toLowerCase()) != 0
+          ).sort();
+
+          // concatenate the sorted arrays and store in state
+          filteredCities = first.concat(others);     
+    
           setFilteredSuggestions(filteredCities);
 
         })
